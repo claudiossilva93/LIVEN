@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate, OneToMany, JoinColumn } from "typeorm";
 import bcrypt from "bcryptjs"
+import Address from "./Address"
 
 @Entity('users')
 class User {
@@ -24,6 +25,9 @@ class User {
 
     @Column('date')
     updated_at:Date;
+
+    @OneToMany(() => Address, (address:Address) => address.user)
+    address:Address[];
 
     @BeforeInsert()
     @BeforeUpdate()

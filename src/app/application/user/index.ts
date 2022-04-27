@@ -1,6 +1,6 @@
-import { AppDataSource } from "../../../data-source";
-import IUser from "../Interfaces/IUser";
-import User from "../models/User";
+import { AppDataSource } from "../../../../data-source";
+import IUser from "../../Interfaces/IUser";
+import User from "../../models/User";
 
 export default {
 
@@ -25,7 +25,7 @@ export default {
 
     async getById(id: string): Promise<User|null>{
         const repository = AppDataSource.getRepository(User)
-        return await repository.findOne({ select:{ id: true, email: true, nome: true, sobrenome: true, created_at: true, updated_at: true },where:{ id } });
+        return await repository.findOne({ where:{ id }, relations:{ address:true } });
     },
 
     async deleteById(id: string): Promise<void>{
@@ -51,8 +51,7 @@ export default {
         user.password = IUser.password || user.password
         user.updated_at = new Date()
 
-        await repository.save(user)
-        
+        await repository.save(user)        
 
         return user;
     }

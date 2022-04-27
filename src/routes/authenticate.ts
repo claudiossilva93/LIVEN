@@ -4,4 +4,6 @@ import AuthController from "../app/controllers/AuthController";
 
 router.post('/', AuthController.authenticate)
 
+
+
 module.exports = router
